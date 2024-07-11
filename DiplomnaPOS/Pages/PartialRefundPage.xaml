@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.PartialRefundPage"
+             xmlns:helpermodel ="clr-namespace:DiplomnaPOS.Models"
+             xmlns:converter ="clr-namespace:DiplomnaPOS.Converters"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             x:DataType="viewmodel:PartialRefundPageViewModel"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False"
+             Padding="12,12">
+
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="defaultItemTemplate" x:DataType="helpermodel:TransactionItemModel">
+                <Border
+                    Stroke="{StaticResource ContainerBorderColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="15,15">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3"/>
+                    </Border.StrokeShape>
+
+                    <StackLayout
+                            Orientation="Horizontal"
+                            Spacing="8">
+
+                        <Label Text="{Binding ProductName}"
+                               FontSize="Small"
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding ProductQuantity}"
+                               FontSize="Small"
+                               VerticalOptions="Center"
+                               HorizontalOptions="EndAndExpand"/>
+                        <Stepper x:Name="ProductQuantityStepper"
+                                 Minimum = "0"
+                                 Maximum="{Binding ProductInitialQuantity}"
+                                 Value = "{Binding ProductQuantity}"
+                                 HorizontalOptions="End"/>
+                        <Button
+                            Text="{mi:Fluent Icon=Delete28, IconSize=28}" 
+                            Padding="0"
+                            TextColor="Black"
+                            HeightRequest="48"
+                            WidthRequest="48"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PartialRefundPageViewModel}}, Path=RemoveItemFromTransactionCommand}"
+                            CommandParameter="{Binding .}" >
+                        </Button>
+                    </StackLayout>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="missingItemTemplate" x:DataType="helpermodel:TransactionItemModel">
+                <Border
+                     Stroke="{StaticResource ContainerBorderColor}"
+                     StrokeThickness="1"
+                     BackgroundColor="{StaticResource PageBackgroundColor}"
+                     Padding="15,15">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3"/>
+                    </Border.StrokeShape>
+
+                    <StackLayout
+                         Orientation="Horizontal"
+                         Spacing="8">
+
+                        <Label Text="{Binding ProductName}"
+                               FontSize="Small"
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding ProductQuantity}"
+                               FontSize="Small"
+                               VerticalOptions="Center"
+                               HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </Border>
+            </DataTemplate>
+
+            <converter:TransactionItemTemplateConverter x:Key="transactionItemConverterSelecter"
+                                                        DefaultItemTemplate="{StaticResource defaultItemTemplate}"
+                                                        MissingItemTemplate="{StaticResource missingItemTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+    <Border
+        Stroke="{StaticResource ContainerBorderColor}"
+        StrokeThickness="1"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        Padding="40,20"
+        VerticalOptions="Fill">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+        <Grid
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="12">
+
+
+            <Label Text="{Binding PageTitle, StringFormat='Order №: {0}'}"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   Padding="0,0,0,20"
+                   Grid.Row="0"
+                   />
+            <ScrollView Grid.Row="1">
+                
+                <VerticalStackLayout>
+                    <CollectionView 
+                        ItemsSource="{Binding TransactionItems}"
+                        ItemTemplate="{StaticResource transactionItemConverterSelecter}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout
+                                Orientation="Vertical"
+                                ItemSpacing="5"
+                            />
+                        </CollectionView.ItemsLayout>
+                        <!--<CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="helpermodel:TransactionItemModel">
+                                <Border
+                                    Stroke="{StaticResource ContainerBorderColor}"
+                                    StrokeThickness="1"
+                                    BackgroundColor="White"
+                                    Padding="15,15">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="3"/>
+                                    </Border.StrokeShape>
+
+                                    <StackLayout
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+
+                                        <Label Text="{Binding ProductName}"
+                                               FontSize="Small"
+                                               VerticalOptions="Center"/>
+                                        <Label Text="{Binding ProductQuantity}"
+                                               FontSize="Small"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="EndAndExpand"/>
+                                        <Stepper x:Name="ProductQuantityStepper"
+                                                 Minimum = "0"
+                                                 Maximum="{Binding ProductInitialQuantity}"
+                                                 Value = "{Binding ProductQuantity}"
+                                                 HorizontalOptions="End"
+                                                 />
+                                        <Button
+                                            Text="{mi:Fluent Icon=Delete28, IconSize=28}" 
+                                            Padding="0"
+                                            TextColor="Black"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
+                                            BackgroundColor="Transparent"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="End"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PartialRefundPageViewModel}}, Path=RemoveItemFromTransactionCommand}"
+                                            CommandParameter="{Binding .}"
+                                            >
+                                        </Button>
+                                    </StackLayout>
+                                </Border>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>-->
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+
+
+
+            <HorizontalStackLayout 
+                Grid.Row="2"
+                Spacing="19">
+                
+                <Button x:Name="performRefundBtn"
+                        Text="Proceed"
+                        Command="{Binding PerformTransactionEditCommand}"
+                        WidthRequest="120"
+                        HorizontalOptions="Start"/>
+
+                <Button x:Name="cancelOperationBtn"
+                        Text="Cancel"
+                        Clicked="cancelOperationBtn_Clicked"                     
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        BorderWidth="0.5"
+                        WidthRequest="120"
+                        HorizontalOptions="Start"/> 
+            </HorizontalStackLayout>
+            
+
+        </Grid>
+
+    </Border>
+</ContentPage>

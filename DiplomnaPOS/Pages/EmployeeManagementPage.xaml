@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.EmployeeManagementPage"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             xmlns:helpermodel ="clr-namespace:DiplomnaPOS.Models"
+             xmlns:converter ="clr-namespace:DiplomnaPOS.Converters"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:DataType="viewmodel:EmployeeManagementPageViewModel"
+             Padding="12,12">
+             <!--Shell.NavBarIsVisible="False"-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="defaultItemTemplate" x:DataType="helpermodel:UsersDataModel">
+                <Border Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        Padding="15,15">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3"/>
+                    </Border.StrokeShape>
+
+                    <StackLayout Orientation="Horizontal"
+                                 Spacing="15">
+
+                        <Label FontSize="Small"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               FontAttributes="Bold"
+                               Text="{Binding Role}"/>
+                        
+                        <Grid RowDefinitions="*,*" 
+                              VerticalOptions="Fill"
+                              Grid.Column="2">
+
+                            <Label Text="{Binding UserName}"
+                                   Grid.Row="0"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="Micro" />
+
+                            <Label Text="{Binding Email}"
+                                   Grid.Row="1"
+                                   FontSize="Micro"
+                                   Opacity="0.65" />
+                        </Grid>
+
+                        <Button Padding="0"
+                                TextColor="Black"
+                                HeightRequest="48"
+                                WidthRequest="48"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{mi:Fluent Icon=Pen28, IconSize=28}" 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EmployeeManagementPageViewModel}}, Path=EditEmployeeCommand}"
+                                CommandParameter="{Binding .}">
+                        </Button>
+
+                        <Button Text="{mi:Fluent Icon=Delete28, IconSize=28}" 
+                                TextColor="Black"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                BackgroundColor="Transparent"
+                                Padding="0"
+                                HeightRequest="48"
+                                WidthRequest="48"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EmployeeManagementPageViewModel}}, Path=DeleteEmployeeCommand}"
+                                CommandParameter="{Binding .}">
+                        </Button>
+                    </StackLayout>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="missingRoleTemplate" x:DataType="helpermodel:UsersDataModel">
+                <Border Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        Padding="15,15">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3"/>
+                    </Border.StrokeShape>
+
+                    <StackLayout Orientation="Horizontal"
+                                 Spacing="15">
+
+                        <Label FontSize="Small"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               Text="UNASSIGNED"
+                               TextColor="Red"/>
+                        
+                        <Grid RowDefinitions="*,*" 
+                              VerticalOptions="Fill"
+                              Grid.Column="2">
+
+                            <Label Text="{Binding UserName}"
+                                   Grid.Row="0"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="Micro" />
+
+                            <Label Text="{Binding Email}"
+                                   Grid.Row="1"
+                                   FontSize="Micro"
+                                   Opacity="0.65" />
+                        </Grid>
+
+                        <Button Padding="0"
+                                TextColor="Black"
+                                HeightRequest="48"
+                                WidthRequest="48"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{mi:Fluent Icon=Pen28, IconSize=28}" 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EmployeeManagementPageViewModel}}, Path=EditEmployeeCommand}"
+                                CommandParameter="{Binding .}">
+                        </Button>
+
+                        <Button Text="{mi:Fluent Icon=Delete28, IconSize=28}" 
+                                TextColor="Black"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                BackgroundColor="Transparent"
+                                Padding="0"
+                                HeightRequest="48"
+                                WidthRequest="48"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EmployeeManagementPageViewModel}}, Path=DeleteEmployeeCommand}"
+                                CommandParameter="{Binding .}">
+                        </Button>
+
+                    </StackLayout>
+                </Border>
+            </DataTemplate>
+
+            <converter:UnassignedUserTemplateConverter 
+                x:Key="UnassignedUserTemplateSelector"
+                DefaultRoleTemplate="{StaticResource defaultItemTemplate}"
+                MissingRoleTemplate="{StaticResource missingRoleTemplate}"/>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+    <Border Stroke="{StaticResource ContainerBorderColor}"
+            StrokeThickness="1"
+            BackgroundColor="{StaticResource ContainerBackgroundColor}"
+            Padding="40,20"
+            VerticalOptions="Fill">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" VerticalOptions="Fill">
+            <Label VerticalOptions="Start"
+                   Grid.Row="0"
+                   Text="Employees"
+                   FontAttributes="Bold"
+                   FontSize="Large"/>
+            
+            <VerticalStackLayout Grid.Row="1"
+                                 Spacing="10">
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="8">
+
+                    <Button Text="Add new employee"
+                            Grid.Column="0"
+                            VerticalOptions="Start"
+                            CornerRadius="4"
+                            BackgroundColor="White"
+                            TextColor="Black"
+                            BorderWidth="0.5"
+                            Command="{Binding AddNewEmployeeCommand}"/>
+
+                    <Button Text="Add new role"
+                            VerticalOptions="End"
+                            CornerRadius="4"
+                            BackgroundColor="White"
+                            TextColor="Black"
+                            BorderWidth="0.5"
+                            Grid.Column="1"
+                            Command="{Binding AddNewRoleCommand}"/>
+                </Grid>
+
+                <Line Stroke="{StaticResource ContainerBorderColor}"
+                      X2="{Binding Width, Source={RelativeSource Self}}"
+                      HorizontalOptions="FillAndExpand"
+                      StrokeThickness="2" />
+            </VerticalStackLayout>
+
+            <CollectionView VerticalOptions="FillAndExpand"
+                            Grid.Row="2"
+                            ItemsSource ="{Binding EmployeesList}"
+                            ItemTemplate="{StaticResource UnassignedUserTemplateSelector}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+
+            </CollectionView>
+        </Grid>
+    </Border>
+</ContentPage>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="DiplomnaPOS.Pages.Popups.AwaitingNfcPaymentPopup"
+           CanBeDismissedByTappingOutsideOfPopup="True"
+           xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+           x:Name="Self"
+           BindingContext="{x:Reference Self}"
+           Color="Transparent"
+           >
+    
+    <Border
+        Padding="12,0"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        HeightRequest="250"
+        WidthRequest="320"
+        StrokeThickness="0.3">
+
+        
+        <Border.Shadow>
+            <Shadow 
+                Brush="Gray"
+                Radius="10"
+                Offset="0,10"
+                Opacity="0.1"/>
+        </Border.Shadow>
+
+
+        <VerticalStackLayout
+            Padding="0,35,0,0"
+            Spacing="20">
+            <Label 
+               Text="Awaiting card"
+               FontSize="Subtitle"
+               HorizontalOptions="Center"/>
+            <ActivityIndicator
+                HeightRequest="50" 
+                WidthRequest="50"
+                IsRunning="true"
+                />
+            <Button
+                x:Name="closePopUpBtn"
+                Text="Cancel"
+                Margin="20"
+                CornerRadius="4"
+                BackgroundColor="White"
+                TextColor="Black"
+                BorderWidth="0.5"
+                WidthRequest="120"
+                HeightRequest="32"
+                Clicked="closePopUpBtn_Clicked"
+                />
+        </VerticalStackLayout>
+
+    </Border>
+</mct:Popup>

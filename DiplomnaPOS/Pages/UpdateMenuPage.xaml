@@ -1,0 +1,206 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.UpdateMenuPage"
+             xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:DataType="viewmodel:UpdateMenuPageViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Padding="12,12"
+             >
+             <!--Shell.NavBarIsVisible="False"-->
+
+    <mct:DockLayout>
+
+        <Grid 
+            ColumnDefinitions="30*,70*"
+            ColumnSpacing="10">
+
+            <!--Padding="12,12"
+        VerticalOptions="FillAndExpand"
+        HorizontalSpacing="9">-->
+
+            <!--mct:DockLayout.DockPosition="Left"-->
+            <Border
+                Grid.Column="0"
+                mct:DockLayout.DockPosition="Left"
+                Stroke="{StaticResource ContainerBorderColor}"
+                StrokeThickness="1"
+                BackgroundColor="White"
+                Padding="15,10"
+                VerticalOptions="Fill">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="4,4,4,4"/>
+                </Border.StrokeShape>
+
+                    <!--WidthRequest="350"--> 
+                <CollectionView 
+                    VerticalOptions="FillAndExpand"
+                    ItemsSource="{Binding CategoriesList}"
+                    VerticalScrollBarVisibility="Default"
+                    SelectionMode="Single"
+                    x:Name="CategoriesCollectionView"
+                    SelectionChangedCommand="{Binding FilterCurrentProductsCommand}"
+                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CategoriesCollectionView}}">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                        Orientation="Vertical" 
+                        ItemSpacing="3"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Category">
+                            <StackLayout Orientation="Horizontal">
+                                <Label 
+                                    Text="{Binding Name}"
+                                    VerticalOptions="Center"
+                                    FontSize="Small"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="3"
+                                    MaximumWidthRequest="260"/>
+
+                                <Button 
+                                    Text="{mi:Fluent Icon=Pen28, IconSize=28}" 
+                                    FontSize="Small"
+                                    Padding="0"
+                                    TextColor="Black"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="EndAndExpand"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UpdateMenuPageViewModel}}, Path=UpdateCategoryNameCommand}"
+                                    CommandParameter="{Binding .}"/>
+
+                                <Button 
+                                    Text="{mi:Fluent Icon=Delete28, IconSize=28}"
+                                    FontSize="Small"
+                                    Padding="0"
+                                    TextColor="Black"
+                                    HeightRequest="48"
+                                    WidthRequest="48"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UpdateMenuPageViewModel}}, Path=DeleteCategoryNameCommand}"
+                                    CommandParameter="{Binding .}"/>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Border>
+
+            <Grid 
+                Grid.Column="1"
+                RowDefinitions="Auto,*" 
+                RowSpacing="5">
+
+                <VerticalStackLayout Grid.Row="0"
+                                     Spacing="10" >
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                    <Button Text="Add Category"
+                            Command="{Binding AddNewCategoryNameCommand}"
+                            VerticalOptions="Start"
+                            CornerRadius="4"
+                            BackgroundColor="White"
+                            TextColor="Black"
+                            BorderWidth="0.5"
+                            Grid.Column="0"/>
+
+                    <Button Text="Add Item"
+                                VerticalOptions="End"
+                                Grid.Column="1"
+                                CornerRadius="4"
+                                BackgroundColor="White"
+                                TextColor="Black"
+                                BorderWidth="0.5"
+                                Command="{Binding AddNewProductCommand}"/>
+                    </Grid>
+                    <Line
+                    Stroke="{StaticResource ContainerBorderColor}"
+                    X2="{Binding Width, Source={RelativeSource Self}}"
+                    HorizontalOptions="FillAndExpand"
+                    StrokeThickness="2" />
+                </VerticalStackLayout>
+
+
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding DisplayFilteredProducts}"
+                                VerticalScrollBarVisibility="Default">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                        Orientation="Vertical" 
+                        ItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Product">
+                            <Border
+                                Stroke="{StaticResource ContainerBorderColor}"
+                                StrokeThickness="1"
+                                BackgroundColor="White"
+                                Padding="15,15">
+
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="3"/>
+                                </Border.StrokeShape>
+
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="15">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="Small"
+                                           VerticalOptions="Center"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="3"
+                                           MinimumWidthRequest="700"
+                                        />
+
+                                    <Button Padding="0"
+                                            TextColor="Black"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
+                                            BackgroundColor="Transparent"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="EndAndExpand"
+                                            Text="{mi:Fluent Icon=Pen28, IconSize=28}" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UpdateMenuPageViewModel}}, Path=EditProductCommand}"
+                                            CommandParameter="{Binding .}">
+                                    </Button>
+
+                                    <Button Text="{mi:Fluent Icon=Delete28, IconSize=28}" 
+                                            TextColor="Black"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="End"
+                                            BackgroundColor="Transparent"
+                                            Padding="0"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UpdateMenuPageViewModel}}, Path=DeleteProductCommand}"
+                                            CommandParameter="{Binding .}">
+
+
+                                        <Button.Shadow>
+                                            <Shadow Brush="Black"
+                                                    Offset="20,20"
+                                                    Radius="40"
+                                                    Opacity="0.8"/>
+                                        </Button.Shadow>
+                                        
+                                    </Button>
+                                </StackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </mct:DockLayout>
+
+</ContentPage>

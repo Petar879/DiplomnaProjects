@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.StartPage"
+             xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+             xmlns:helpermodel ="clr-namespace:DiplomnaPOS.Models"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             x:DataType="viewmodel:StartPageViewModel"
+             xmlns:local ="clr-namespace:DiplomnaPOS"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:converter ="clr-namespace:DiplomnaPOS.Converters"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Padding="12,12"
+             Shell.NavBarIsVisible="False"
+             >
+             <!--Shell.NavBarIsVisible="False"-->
+             <!--xmlns:math="clr-namespace:HexInnovation;assembly=MathConverter.maui"-->
+
+    <ContentPage.Resources>
+        <!--<math:MathConverter x:Key="Math" />-->
+        <converter:SubtractMultiValueConverter x:Key="SubtractionConverter"/>
+    </ContentPage.Resources>
+    
+    
+    <mct:DockLayout>
+        <Grid 
+            ColumnDefinitions="70*,30*"
+            ColumnSpacing="10">
+            <Grid 
+                Grid.Column="0"
+                RowDefinitions="*,Auto" 
+                RowSpacing="12">
+
+                <Border
+                    Stroke="{StaticResource ContainerBorderColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{StaticResource ContainerBackgroundColor}"
+                    Padding="20,20"
+                    Grid.Row="0"
+                    VerticalOptions="Fill">
+
+                    <StackLayout Orientation="Vertical">
+                        <ScrollView  Orientation="Horizontal"  x:Name="categoryNamesScrollView">
+                            <CollectionView 
+                                ItemsSource="{Binding CategoryList}" 
+                                SelectionMode="None"
+                                >
+                                <CollectionView.ItemsLayout >
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate 
+                                    RadioButtonGroup.GroupName="CategoryNames"
+                                    RadioButtonGroup.SelectedValue="{Binding CategoryId}" >
+                                    <DataTemplate x:DataType="model:Category">
+                                        <!--<Grid HorizontalOptions="FillAndExpand">-->
+                                        <RadioButton CheckedChanged="RadioButton_CheckedChanged" GroupName="CategoryNames" Content="{Binding Name}" Value="{Binding Id}">
+                                            <!--<RadioButton.IsChecked>
+                                            <Binding Path="BindingContext.SelectedTime"/>
+                                        </RadioButton.IsChecked>-->
+                                            <RadioButton.ControlTemplate>
+                                                <ControlTemplate>
+                                                    <Grid RowDefinitions="25,4">
+                                                        <VisualStateManager.VisualStateGroups>
+                                                            <VisualStateGroupList>
+                                                                <VisualStateGroup x:Name="CheckedStates">
+                                                                    <VisualState x:Name="Checked">
+                                                                        <VisualState.Setters>
+                                                                            <Setter
+                                                                                TargetName="TextLabel"
+                                                                                Property="Label.TextColor"
+                                                                                Value="{StaticResource Primary}"/>
+                                                                            <Setter
+                                                                                TargetName="Indicator"
+                                                                                Property="BoxView.Color"
+                                                                                Value="{StaticResource Primary}"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="Unchecked">
+                                                                        <VisualState.Setters>
+                                                                            <Setter
+                                                                                TargetName="TextLabel"
+                                                                                Property="Label.TextColor"
+                                                                                Value="Black"/>
+                                                                            <Setter
+                                                                                TargetName="Indicator"
+                                                                                Property="BoxView.Color"
+                                                                                Value="Transparent"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                </VisualStateGroup>
+                                                            </VisualStateGroupList>
+                                                        </VisualStateManager.VisualStateGroups>
+                                                        <Label Text="{TemplateBinding Content}" x:Name="TextLabel" HorizontalOptions="Center" />
+                                                        <BoxView x:Name="Indicator" Grid.Row="1" Color="Black"/>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </RadioButton.ControlTemplate>
+                                        </RadioButton>
+                                        <!--</Grid>-->
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+
+                        <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical">
+                            <FlexLayout 
+                                BindableLayout.ItemsSource="{Binding ProductsAfterFiltering}"
+                                x:Name="ItemsCollectionView"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Fill"
+                                Direction="Row"
+                                Wrap="Wrap"
+                                AlignContent="Start"
+                                AlignItems="Start"
+                                JustifyContent="Start"
+                                Padding="0">
+
+                                <BindableLayout.ItemTemplate>
+                                    <!--<DataTemplate x:DataType="model:Product">-->
+                                    <DataTemplate x:DataType="helpermodel:CartProductModel">
+                                        <Border
+                                            Stroke="{StaticResource ContainerBorderColor}"
+                                            StrokeThickness="1"
+                                            BackgroundColor="White"
+                                            WidthRequest="163"
+                                            HeightRequest="145"
+                                            Padding="15,15">
+
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="4"/>
+                                            </Border.StrokeShape>
+
+                                            <Border.Behaviors>
+                                                <toolkit:TouchBehavior
+                                                    HoveredBackgroundColor="{StaticResource ContainerBackgroundColor}">
+                                                </toolkit:TouchBehavior>
+                                            </Border.Behaviors>
+
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                    Tapped="ItemBorder_Tapped"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:StartPageViewModel}}, Path=AddProductToCartCommand}"                 
+                                                    CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+
+
+                                            <VerticalStackLayout 
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="Center"
+                                                >
+                                                
+                                                <Label Text="{Binding Product.Name}"
+                                                       FontSize="Small"
+                                                       HorizontalTextAlignment="Center" 
+                                                       />
+                                                <Label HorizontalTextAlignment="Center"
+                                                       FontSize="Micro"
+                                                       >
+                                                    <Label.Text>
+                                                        <MultiBinding Converter="{StaticResource SubtractionConverter}">
+                                                            <Binding Path="QuantityInInventory" />
+                                                            <Binding Path="ProductCount" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                                       
+                                                
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </ScrollView>
+
+                    </StackLayout>
+                </Border>
+
+                <HorizontalStackLayout Grid.Row="1" Spacing="19" >
+                    <Button
+                        Text="Log out"
+                        x:Name="LogOutBtn"
+                        CornerRadius="4"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        
+                        Clicked="LogOutBtn_Clicked"
+                        HorizontalOptions="Start"/>
+                        <!--WidthRequest="120"-->
+
+                    <Button
+                        Text="Cancel order"
+                        CornerRadius="4"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        BorderWidth="0.5"
+                        
+                        Command="{Binding CancelOrderCommand}"
+                        HorizontalOptions="Start"/>
+                        <!--WidthRequest="120"-->
+
+
+                    <Button x:Name="ReprintLastOrderBtn"
+                            Text="Reprint reciept"
+                            Grid.Column="2"
+                            CornerRadius="4"
+                            BackgroundColor="White"
+                            TextColor="Black"
+                            BorderWidth="0.5"
+                            Command="{Binding PerformRecieptReprintCommand}"/>
+                    
+                    <!--For quick page navigation when developing-->
+                    <!--<Button
+                        x:Name="TestingPageShortcut"
+                        CornerRadius="4"
+                        Text="Go to test page"
+                        BackgroundColor="LimeGreen"
+                        Clicked="TestingPageShortcut_Clicked"
+                        HeightRequest="32"                        
+                        HorizontalOptions="End"/>-->
+
+                </HorizontalStackLayout>
+            </Grid>
+
+            <Grid 
+                Grid.Column="1"
+                mct:DockLayout.DockPosition="Right"
+                RowDefinitions="*, Auto" 
+                RowSpacing="10">
+                <Border
+                    Stroke="{StaticResource ContainerBorderColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{StaticResource ContainerBackgroundColor}"
+                    Padding="15,15"
+                    Grid.Row="0"
+                    VerticalOptions="Fill">
+
+                    <CollectionView  ItemsSource="{Binding ProductCart.ProductsCollection}" x:Name="ItemInCollection">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout
+                                    Orientation="Vertical"
+                                    ItemSpacing="5" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="helpermodel:CartProductModel">
+                                <Border
+                                     Stroke="{StaticResource ContainerBorderColor}"
+                                     StrokeThickness="1"
+                                     BackgroundColor="White"
+                                     Padding="15,15">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="3"/>
+                                    </Border.StrokeShape>
+
+                                    <Grid ColumnDefinitions="auto,auto,*,auto,auto"
+                                          ColumnSpacing="8">
+
+                                        <Label Text="{Binding ProductCount}" 
+                                               FontSize="Subtitle"
+                                               VerticalOptions="Center"
+                                               Grid.Column="0"/>
+
+                                        <Stepper x:Name="ProductQuantityStepper" 
+                                                 Minimum="1"
+                                                 Maximum="{Binding QuantityInInventory}"
+                                                 Value="{Binding ProductCount}"
+                                                 ValueChanged="ProductQuantityStepper_ValueChanged"
+                                                 Grid.Column="1"/>
+
+                                        <Grid RowDefinitions="*,*" 
+                                              VerticalOptions="Fill"
+                                              Grid.Column="2">
+
+                                            <Label Text="{Binding Product.Name}"
+                                                   Grid.Row="0"
+                                                   LineBreakMode="TailTruncation"
+                                                   FontSize="Micro" />
+
+                                            <Label Text="{Binding Product.Price}"
+                                                   Grid.Row="1"
+                                                   FontSize="Micro"
+                                                   Opacity="0.65" />
+                                        </Grid>
+
+                                        <Label Text="{Binding Price, StringFormat='{0:F2}'}"
+                                               FontSize="Subtitle"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="EndAndExpand"
+                                               Grid.Column="3"/>
+
+                                        <Button Text="{mi:Fluent Icon=Delete32, IconSize=32}"
+                                                FontSize="Small"
+                                                Padding="0"
+                                                TextColor="Black"
+                                                HeightRequest="48"
+                                                WidthRequest="48"
+                                                BackgroundColor="Transparent"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="End"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:StartPageViewModel}}, Path=RemoveProductFromCartCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Grid.Column="4"/>
+                                    </Grid>
+                                </Border>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+
+
+                <Border
+                    Stroke="{StaticResource ContainerBorderColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{StaticResource ContainerBackgroundColor}"
+                    Padding="20,20"
+                    VerticalOptions="Fill"
+                    Grid.Row="1" >
+
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label FontSize="Title" 
+                               Text="{Binding ProductCart.ProductsInCartPrice, StringFormat='Общо: {0:F2} лв'}" />
+
+                        <Grid 
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="10">
+
+                            <Button x:Name="NfcBtn"
+                                    Text="Card"
+                                    Grid.Column="0"
+                                    CornerRadius="4"
+                                    BackgroundColor="White"
+                                    TextColor="Black"
+                                    BorderWidth="0.5"
+                                    Command="{Binding PerformCardPaymentCommand}"/>
+
+                            <Button x:Name="CashBtn"
+                                    Text="Cash"
+                                    Grid.Column="1"
+                                    CornerRadius="4"
+                                    BackgroundColor="White"
+                                    TextColor="Black"
+                                    BorderWidth="0.5"
+                                    Command="{Binding PerformCashPaymentCommand}"/>
+
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+    </mct:DockLayout>
+</ContentPage>

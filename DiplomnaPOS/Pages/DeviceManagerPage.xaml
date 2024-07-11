@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.DeviceManagerPage"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             xmlns:local ="clr-namespace:DiplomnaPOS"
+             xmlns:converter ="clr-namespace:DiplomnaPOS.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:DeviceManagerViewModel"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False"
+             Padding="12,12">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="defaultTemplate" x:DataType="{x:Null}">
+                <RadioButton
+                        Content="{Binding Path=Value}"
+                        Value="{Binding Path=Value}"
+                        CheckedChanged="RadioButton_CheckedChanged">
+                </RadioButton>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="specialTemplate" x:DataType="{x:Null}">
+                <RadioButton
+                        Content="{Binding Path=Value}"
+                        Value="{Binding Path=Value}"
+                        IsChecked="True"
+                        CheckedChanged="RadioButton_CheckedChanged">
+                </RadioButton>
+            </DataTemplate>
+            
+            <converter:DefaultNfcReaderTemplateConvertor x:Key="radioButtonDataTemplateSelector"
+                                         DefaultTemplate="{StaticResource defaultTemplate}"
+                                         SpecialTemplate="{StaticResource specialTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Border
+        Stroke="{StaticResource ContainerBorderColor}"
+        StrokeThickness="1"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        Padding="40,20"
+        HorizontalOptions="FillAndExpand">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10">
+
+            <Label 
+                Text="Device Manager"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Padding="0,0,0,20"
+                />
+
+            <HorizontalStackLayout>
+
+                <Border Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"  WidthRequest="400">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4,4,4,4"/>
+                    </Border.StrokeShape>
+                
+                
+                <VerticalStackLayout
+                    x:Name="verticalStack" 
+                    Padding="23,16">
+                    
+                    <Label
+                        FontSize="Subtitle"
+                        Text="NFC devices" 
+                        Padding="0,0,0,5"/>
+                    
+                    <Line 
+                        Stroke="{StaticResource ContainerBorderColor}"
+                        X2="{Binding Width, Source={RelativeSource Self}}"
+                        HorizontalOptions="Fill" StrokeThickness="2" />
+                    
+                    <ScrollView
+                        Margin="0,10,0,0"     
+                        HeightRequest="130">
+
+                        <CollectionView x:Name="nfcDevicesCollectionView" 
+                            HorizontalOptions="FillAndExpand"
+                            RadioButtonGroup.GroupName="nfcDevicesRadioButtons"
+                            ItemTemplate="{StaticResource radioButtonDataTemplateSelector}"
+                            ItemsSource="{Binding NfcDevices}">
+
+                            <!--<CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Null}">
+                                    <RadioButton
+                                        BackgroundColor="AliceBlue"
+                                        FontFamily="SegoeUI"
+                                        Content="{Binding Path=Value}"
+                                        Value="{Binding Path=Value}"
+                                        CheckedChanged="RadioButton_CheckedChanged"
+                                        >
+
+                                            --><!--<RadioButton.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                    </RadioButton.GestureRecognizers>-->
+
+                                    <!--<RadioButton.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            EventName="CheckedChanged"
+                                            Command="{Binding Path=BindingContext.GetNfcDeviceIdCommand, Source={Reference nfcDevicesCollectionView}}"
+                                            CommandParameter="{Binding Path=Value}"
+                                        />-->
+
+                                    <!--</RadioButton.Behaviors>--><!--
+
+                                    </RadioButton>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>-->
+                        </CollectionView>
+
+                        </ScrollView>
+
+                        <Button x:Name="testNFCbtn"
+                            HorizontalOptions="End"
+                            WidthRequest="120" 
+                            Text="Test"
+                            Margin="0, 10, 0, 0"
+                            Command="{Binding TestNfcDeviceCommand}"/>
+                </VerticalStackLayout>
+                </Border>
+
+                <ActivityIndicator IsRunning="{Binding GetNfcDeviceNamesCommand.IsRunning}"
+                               IsVisible="{Binding GetNfcDeviceNamesCommand.IsRunning}"
+                               IsEnabled="{Binding GetNfcDeviceNamesCommand.IsRunning}"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               Color="Orange"/>
+
+            </HorizontalStackLayout>
+
+
+        </VerticalStackLayout>
+
+    </Border>
+    <!--<CollectionView ItemsSource="{Binding NfcDevices}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Label Text="{Binding .}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </HorizontalStackLayout>-->
+
+</ContentPage>

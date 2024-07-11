@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="DiplomnaPOS.Pages.Popups.AddNewEmployeePopup"
+           xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           x:Name="Self"
+           BindingContext="{x:Reference Self}"
+           Color="Transparent"
+           >
+
+    <mct:Popup.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red"/>
+        </Style>
+    </mct:Popup.Resources>
+
+
+    <Border Padding="32,24,32,0"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        StrokeThickness="0.3"
+        WidthRequest="320"
+        HeightRequest="410">
+
+        <Border.Shadow>
+            <Shadow Brush="Gray"
+                    Radius="10"
+                    Offset="0,10"
+                    Opacity="0.1"/>
+        </Border.Shadow>
+
+        <VerticalStackLayout Spacing="12"
+                         VerticalOptions="Fill">
+
+            <Label x:Name="popupName"
+               Text="Add new employee"
+               VerticalOptions="Center" 
+               FontAttributes="Bold"
+               FontSize="Medium"
+               HorizontalOptions="Start" />
+
+            <VerticalStackLayout Spacing="12"
+                                 VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Email"/>
+                    <Entry x:Name="emailEntry"
+                       Placeholder="Email"
+                       PlaceholderColor="Red"
+                       ClearButtonVisibility="WhileEditing">
+                        <Entry.Behaviors>
+                            <toolkit:EmailValidationBehavior
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                x:Name="emailValidator"
+                                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                                MinimumLength="1"
+                                />
+                        </Entry.Behaviors>
+                    </Entry>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Role"/>
+                    <Picker x:Name="rolePicker"/>
+                </VerticalStackLayout>
+
+
+                <Entry x:Name="passwordEntry"
+                       IsPassword="True"
+                       Placeholder="New password"
+                       PlaceholderColor="Red"
+                       ClearButtonVisibility="WhileEditing">
+
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior 
+                            x:Name="passwordValidator"
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"  
+                            Flags="ValidateOnValueChanged">
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="Digit" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 digit" 
+                                RegexPattern="" />
+                            <!--x:Name="DigitValidation"-->
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 upper case" 
+                                RegexPattern="" />
+                            <!--x:Name="UpperValidation"-->
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="LowercaseLetter" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 lower case" 
+                                RegexPattern=""  />
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="NonAlphanumericSymbol" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 symbol" 
+                                RegexPattern=""  />
+                            <!--x:Name="SymbolValidation"-->
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="Any" 
+                                MinimumCharacterTypeCount="6" 
+                                toolkit:MultiValidationBehavior.Error="6 characters" 
+                                RegexPattern="" />
+
+                        </toolkit:MultiValidationBehavior>
+                    </Entry.Behaviors>
+
+                </Entry>
+                <Label Text="{Binding Errors[0], Source={x:Reference passwordValidator}}"
+                       TextColor="Red"
+                       IsVisible="{Binding IsNotValid, Source={x:Reference passwordValidator}}"
+                       FontSize="Caption"
+                       />
+
+                <Entry x:Name="passwordConformationEntry"
+                       IsPassword="True"
+                       Placeholder="Confirm password"
+                       PlaceholderColor="Red"
+                       ClearButtonVisibility="WhileEditing">
+
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior 
+                            x:Name="passwordConformationValidator"
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"  
+                            Flags="ValidateOnValueChanged">
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="Digit" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 digit" 
+                                RegexPattern="" />
+                            <!--x:Name="DigitValidation"-->
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 upper case" 
+                                RegexPattern="" />
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="LowercaseLetter" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 lower case" 
+                                RegexPattern=""  />
+                            <!--x:Name="UpperValidation"-->
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="NonAlphanumericSymbol" 
+                                MinimumCharacterTypeCount="1" 
+                                toolkit:MultiValidationBehavior.Error="1 symbol" 
+                                RegexPattern=""  />
+
+                            <toolkit:CharactersValidationBehavior 
+                                CharacterType="Any" 
+                                MinimumCharacterTypeCount="6" 
+                                toolkit:MultiValidationBehavior.Error="6 characters" 
+                                RegexPattern="" />
+                            <!--x:Name="SymbolValidation"-->
+
+                        </toolkit:MultiValidationBehavior>
+                    </Entry.Behaviors>
+
+                </Entry>
+
+
+            </VerticalStackLayout>
+
+
+            <Grid VerticalOptions="Center"
+                  ColumnDefinitions="*,*"
+                  HorizontalOptions="FillAndExpand"
+                  ColumnSpacing="8">
+
+                <Button x:Name="OkBtn" 
+                    Text="Add" 
+                        Clicked="OkBtn_Clicked"
+                        Grid.Column="0">
+                        <!--IsEnabled="{Binding IsFormValid}"-->
+                </Button>
+
+                <Button x:Name="CancelBtn"
+                    Text="Cancel" 
+                        Clicked="CancelBtn_Clicked"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        BorderWidth="0.5"
+                        BorderColor="{StaticResource ContainerBorderColor}"
+                        Grid.Column="1"/>
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
+</mct:Popup>

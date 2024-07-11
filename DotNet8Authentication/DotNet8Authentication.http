@@ -1,0 +1,72 @@
+@DotNet8Authentication_HostAddress = https://localhost:7049
+
+@Bearer_Token = CfDJ8PyGZjeUAhxIljztm2PMnWcJ7o5H7C8F99EHHuJ7kiCeQiGs7IOF3u4s1t8z9bvsK9YJAZInD3csOzaeNj1efrybszeGPh0VVuhaefHZJJaxg9i2onw6ql_GCbyAbsDl1C9l4MpUBOyWGKfcqIu6n_rsjWLmxmE4iPYHqztSUCecTxA7A28CjP6dz1Eodwnd6krpcsbEQ5Iz50uE_763ubRCBEQyNFjylzcwM7tAD3K-_QSKBU_VUMrOmwGrHr2m-LWUB-SU87j0EZWy-NmiinBjNN-HhBGjn517NyU7WJuLDC8wipYpISqI2ury4ICrAyDLvhAHfPELkohp4LaL_rkznGnZ2KIwuI_a7k4KmRLzUUUfrzLARwaAbXcom0KcxZArMaZQu2Q9TKuUQyX2uDID92p6bXvN-YAhkE5cS7sSrE1YX58hqQxz_wQi_3V7-IDykbfSr5nwY-Kh2MBjPHY0to_gsg_Nshxg8Mp5lFZSDOlWm8RAcEeG47Nvi2lqA0kn8ZK6Is98dDkSNVh9muhbCK9rQteyRHY5CLsa8UdJnXC6NnSvs6bNnNfBLbAisXxh5Z4kXvtlTf9lHNJU1KZPJYgYg6EUqn7u82eQd-IQrHVqqVItfJmvkyw3b3pef1okTt7Eq8guRIZi8u0qEV2hE0hvkYvPqec6gzRQ1bFoTTlgS5MdjhaYjnZPEscru-Op0MxaaDwG_zEwoxW43DJYFIRIV-uPozG85Hg00wPwWWhG1CZWZltHQbefrBa3B9RwX0pp-6Xc0vcq2MUwCaGXVOv5tZ3-d0Jo3im8_rAB
+@User_Id = 2b9764c6-e72f-444a-9208-7956e61ac692
+
+GET {{DotNet8Authentication_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+#Admin login
+POST {{DotNet8Authentication_HostAddress}}/login
+Content-Type: application/json
+{
+  "email": "admin@mymail.bg",
+  "password": "Admin!1"
+}
+###
+
+#Cashier login
+POST {{DotNet8Authentication_HostAddress}}/login
+Content-Type: application/json
+{
+  "email": "cahsier@cashier.mail",
+  "password": "Ccashier!1"
+}
+###
+
+
+POST {{DotNet8Authentication_HostAddress}}/api/roles/AssignUserRole
+Content-Type: application/json
+Authorization: Bearer {{Bearer_Token}}
+{
+  "userName": "iwillgiveuponlife@cashier.com",
+  "userRole": "Cashier"
+}
+
+###
+
+POST {{DotNet8Authentication_HostAddress}}/api/roles/CreateRole
+Content-Type: application/json
+Authorization: Bearer {{Bearer_Token}}
+{
+  "roleName":"RoleFromHttpTester"
+}
+###
+
+GET {{DotNet8Authentication_HostAddress}}/api/roles/GetUsersAndTheirRoles
+Content-Type: application/json
+Authorization: Bearer {{Bearer_Token}}
+
+###
+
+GET {{DotNet8Authentication_HostAddress}}/getloggeduserinfo
+Content-Type: application/json
+Authorization: Bearer {{Bearer_Token}}
+{
+  "userid": {{User_Id}}
+}
+###
+
+POST {{DotNet8Authentication_HostAddress}}/logout
+Content-Type: application/json
+
+###
+
+GET {{DotNet8Authentication_HostAddress}}/api/roles/GetAllRoles
+Content-Type: application/json
+Authorization: Bearer {{Bearer_Token}}
+
+###
+

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.ReceiptManagerPage"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False"
+             Padding="12,12">
+
+
+    <Border
+        Stroke="{StaticResource ContainerBorderColor}"
+        StrokeThickness="1"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        Padding="40,20"
+        VerticalOptions="Fill">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+
+        <Grid
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="12">
+
+            <Label Text="Receipt"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   Padding="0,0,0,20"
+                   Grid.Row="0"
+                   />
+
+            <ScrollView Grid.Row="1">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Border
+                        Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        Padding="15,15">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="3"/>
+                        </Border.StrokeShape>
+
+                        <VerticalStackLayout
+                            >
+
+                            <Label Text="Header"
+                                   FontSize="Subtitle"
+                                   VerticalOptions="Center" 
+                                   HorizontalOptions="Start" />
+
+                            <Line
+                                Stroke="{StaticResource ContainerBorderColor}"
+                                X2="{Binding Width, Source={RelativeSource Self}}"
+                                HorizontalOptions="FillAndExpand"
+                                StrokeThickness="2" />
+
+                            <Editor x:Name="headerEditor"
+                                Placeholder="Enter your response here"
+                                HeightRequest="200" />
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!--<Border
+                        Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        Padding="15,15">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="3"/>
+                        </Border.StrokeShape>
+
+                        --><!--<StackLayout 
+                            Orientation="Horizontal" 
+                            HorizontalOptions="Fill" >
+                            
+                            <Label Text="Display “Served By”"
+                                   FontSize="Subtitle"
+                                   VerticalOptions="Center"/>
+
+                            <Switch x:Name="serverdByToggle"
+                                    IsToggled="true" 
+                                    HorizontalOptions="EndAndExpand"
+                                />
+                        </StackLayout>--><!--
+                    </Border>-->
+
+                    <Border
+                        Stroke="{StaticResource ContainerBorderColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        Padding="15,15">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="3"/>
+                        </Border.StrokeShape>
+
+                        <VerticalStackLayout
+                            Spacing="8">
+
+                            <Label Text="Footer"
+                                   FontSize="Subtitle"
+                                   VerticalOptions="Center" 
+                                   HorizontalOptions="Start" />
+
+                            <Line
+                                Stroke="{StaticResource ContainerBorderColor}"
+                                X2="{Binding Width, Source={RelativeSource Self}}"
+                                HorizontalOptions="FillAndExpand"
+                                StrokeThickness="2" />
+
+                            <Editor x:Name="footerEditor"
+                                    Placeholder="Enter your response here"
+                                    HeightRequest="200" />
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Button x:Name="saveSettingsBtn"
+                    Text="Save changes"
+                    Pressed="SaveSettingsBtn_Pressed"
+                    Grid.Row="2"
+                    HeightRequest="32"
+                    HorizontalOptions="Start"/>
+        </Grid>
+        
+        
+
+        
+
+    </Border>
+</ContentPage>

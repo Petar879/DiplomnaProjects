@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.RefundsPage"
+             xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+             xmlns:viewmodel ="clr-namespace:DiplomnaPOS.Pages"
+             x:DataType="viewmodel:RefundsPageViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Padding="12,12"
+             Shell.NavBarIsVisible="False"
+
+    >
+             <!--Shell.NavBarIsVisible="False"-->
+
+    <Border
+        Stroke="{StaticResource ContainerBorderColor}"
+        StrokeThickness="1"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        Padding="40,20"
+        VerticalOptions="Fill">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+        
+        
+        <Grid RowDefinitions="Auto,*" RowSpacing="20" VerticalOptions="Fill">
+
+            <Label VerticalOptions="Start"
+                   Grid.Row="0"
+                   Text="Refund"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                />
+
+            <CollectionView 
+                Grid.Row="1"
+                VerticalScrollBarVisibility="Always"
+                ItemsSource="{Binding TransactionsList}">
+                
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="5"
+                        />
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Transaction">
+                        <Border
+                            Stroke="{StaticResource ContainerBorderColor}"
+                            StrokeThickness="1"
+                            BackgroundColor="White"
+                            Padding="15,15">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="3"/>
+                            </Border.StrokeShape>
+
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="15">
+
+                                <Label 
+                                    FontSize="Small"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Date}"/>
+
+                                <Label 
+                                    FontSize="Small"
+                                    VerticalOptions="Center"
+                                    Text="{Binding PaymentMethod}" />
+
+                                <Label 
+                                    FontSize="Small"
+                                    VerticalOptions="Center"
+                                    Text="{Binding PaymentValue}" />
+
+                                <Button 
+                                    Padding="0"
+                                    TextColor="Black"
+                                    HeightRequest="48"
+                                    WidthRequest="48"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{mi:Fluent Icon=DeleteArrowBack20, IconSize=28}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RefundsPageViewModel}}, Path=InitiateFullRefundCommand}"
+                                    CommandParameter="{Binding .}"/>
+
+                                <Button 
+                                    Padding="0"
+                                    TextColor="Black"
+                                    HeightRequest="48"
+                                    WidthRequest="48"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                    Text="{mi:Fluent Icon=MoneyHand24, IconSize=28}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RefundsPageViewModel}}, Path=InitiatePartialRefundCommand}"
+                                    CommandParameter="{Binding .}"/>
+
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</ContentPage>

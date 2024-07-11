@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiplomnaPOS.Pages.SettingsPage"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Padding="12,12"
+             Shell.NavBarIsVisible="False"
+
+    >
+             <!--Shell.NavBarIsVisible="False"-->
+
+    <Border
+        Stroke="{StaticResource ContainerBorderColor}"
+        StrokeThickness="1"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        Padding="40,20"
+        VerticalOptions="Fill">
+            
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4,4,4,4"/>
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10">
+
+            <Label 
+                Text="Settings"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Padding="0,0,0,20"/>
+
+        <Border
+            Stroke="{StaticResource ContainerBorderColor}"
+            StrokeThickness="1"
+            BackgroundColor="White"
+            Padding="15,19"
+            VerticalOptions="Fill">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="3"/>
+            </Border.StrokeShape>
+
+            <Border.Behaviors>
+                <toolkit:TouchBehavior
+                    HoveredBackgroundColor="{StaticResource ContainerBackgroundColor}"/>
+            </Border.Behaviors>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="UpdateMenuBtn_Tapped" />
+            </Border.GestureRecognizers>
+
+            <StackLayout
+                Orientation="Horizontal"
+                Spacing="15">
+                <Label 
+                    Text="{mi:Fluent Icon=TextBulletListSquareEdit24}"
+                    VerticalOptions="Center"/>
+
+                <Grid
+                    RowDefinitions="*,*"
+                    VerticalOptions="Center">
+                    <Label
+                        Text="Update menu"
+                        FontSize="Subtitle"
+                        Grid.Row="0"/>
+
+                    <Label 
+                        Text="Edit the contents of the menu"
+                        FontSize="Micro"
+                        Opacity="0.65"
+                        Grid.Row="1"
+                        />
+                </Grid>
+                <Label 
+                    Text="{mi:Fluent Icon=WindowNew24}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="EndAndExpand"
+                    />
+                </StackLayout>
+            </Border>
+
+        <Border
+            Stroke="{StaticResource ContainerBorderColor}"
+            StrokeThickness="1"
+            BackgroundColor="White"
+            Padding="15,19"
+            VerticalOptions="Fill">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="3"/>
+            </Border.StrokeShape>
+
+            <Border.Behaviors>
+                <toolkit:TouchBehavior
+                HoveredBackgroundColor="{StaticResource ContainerBackgroundColor}"/>
+            </Border.Behaviors>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="RefundsBtn_Tapped" />
+            </Border.GestureRecognizers>
+
+            <StackLayout
+                Orientation="Horizontal"
+                Spacing="15">
+                <Label 
+                    Text="{mi:Fluent Icon=Money24}"
+                    VerticalOptions="Center"/>
+
+                <Grid
+                    RowDefinitions="*,*"
+                    VerticalOptions="Center">
+
+                    <Label
+                        Text="Refund"
+                        FontSize="Subtitle"
+                        Grid.Row="0"/>
+
+                    <Label 
+                        Text="Perform a refund operation"
+                        FontSize="Micro"
+                        Opacity="0.65"
+                        Grid.Row="1"/>
+                </Grid>
+                <Label 
+                    Text="{mi:Fluent Icon=WindowNew24}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="EndAndExpand"
+                    />
+            </StackLayout>
+        </Border>
+
+        <Border
+                Stroke="{StaticResource ContainerBorderColor}"
+                StrokeThickness="1"
+                BackgroundColor="White"
+                Padding="15,19"
+                VerticalOptions="Fill">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="3"/>
+            </Border.StrokeShape>
+
+            <Border.Behaviors>
+                <toolkit:TouchBehavior
+                    HoveredBackgroundColor="{StaticResource ContainerBackgroundColor}"/>
+            </Border.Behaviors>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ReceiptManagerBtn_Tapped" />
+            </Border.GestureRecognizers>
+
+            <StackLayout
+                Orientation="Horizontal"
+                Spacing="15">
+                <Label 
+                    Text="{mi:Fluent Icon=Receipt24}"
+                    VerticalOptions="Center"/>
+
+                <Grid
+                    RowDefinitions="*,*"
+                    VerticalOptions="Center">
+                    <Label
+                        Text="Receipt"
+                        FontSize="Subtitle"
+                        Grid.Row="0"
+                        />
+
+                    <Label 
+                        Text="Update the receipt design"
+                        FontSize="Micro"
+                        Opacity="0.65"
+                        Grid.Row="1"
+                        />
+                </Grid>
+                <Label 
+                    Text="{mi:Fluent Icon=WindowNew24}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="EndAndExpand"
+                    />
+            </StackLayout>
+        </Border>
+
+        <Border
+            Stroke="{StaticResource ContainerBorderColor}"
+            StrokeThickness="1"
+            BackgroundColor="White"
+            Padding="15,19"
+            VerticalOptions="Fill">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="3"/>
+            </Border.StrokeShape>
+
+            <Border.Behaviors>
+                <toolkit:TouchBehavior
+                    HoveredBackgroundColor="{StaticResource ContainerBackgroundColor}"/>
+            </Border.Behaviors>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="EmployeeManaganerBtn_Tapped" />
+            </Border.GestureRecognizers>
+
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Label 
+                        Text="{mi:Fluent Icon=Person24}"
+                        VerticalOptions="Center"/>
+
+                    <Grid
+                        RowDefinitions="*,*"
+                        VerticalOptions="Center">
+                        
+                        <Label
+                            Text="Employee management"
+                            FontSize="Subtitle"
+                            Grid.Row="0"
+                            />
+
+                        <Label 
+                            Text="Check on employees or add a new one"
+                            FontSize="Micro"
+                            Opacity="0.65"
+                            Grid.Row="1"
+                            />
+                    </Grid>
+                    <Label 
+                        Text="{mi:Fluent Icon=WindowNew24}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="EndAndExpand"
+                        />
+                </StackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+
+    </Border>
+
+</ContentPage>

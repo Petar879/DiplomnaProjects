@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           x:Class="DiplomnaPOS.Pages.Popups.ProductPopup"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           xmlns:model ="clr-namespace:EfLibrary.Models;assembly=EfLibrary"
+           x:Name="Self"
+           BindingContext="{x:Reference Self}"
+           Color="Transparent"
+           >
+
+    <mct:Popup.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="PlaceholderColor" Value="Red" />
+            <Setter Property="TextColor" Value="Red"/>
+        </Style>
+    </mct:Popup.Resources>
+
+    <Border
+        Padding="32,24,32,0"
+        BackgroundColor="{StaticResource ContainerBackgroundColor}"
+        StrokeThickness="0.3"
+        WidthRequest="320"
+        HeightRequest="485"
+        >
+
+        <Border.Shadow>
+            <Shadow 
+                Brush="Gray"
+                Radius="10"
+                Offset="0,10"
+                Opacity="0.1"/>
+        </Border.Shadow>
+
+        <VerticalStackLayout 
+            Spacing="12"
+            VerticalOptions="Fill">
+
+            <Label  x:Name="popupName"
+                    Text="Welcome to .NET MAUI!"
+                    VerticalOptions="Center" 
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="Start" />
+
+            <VerticalStackLayout
+                Spacing="12"
+                VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Category"/>
+                    <Picker x:Name="CategoryPicker"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Name"/>
+                    <Entry x:Name="field1_data"
+                           Placeholder="Product name"
+                           ClearButtonVisibility="WhileEditing">
+                        <Entry.Behaviors>
+                            <toolkit:TextValidationBehavior
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                x:Name="nameValidator"
+                                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                                MaximumLength="45"
+                                MinimumLength="1"
+                                />
+                        </Entry.Behaviors>
+                    </Entry>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Price"/>
+                    <Entry x:Name="field2_data"
+                           Placeholder="Product price"
+                           PlaceholderColor="Red"
+                           Keyboard="Numeric"
+                           ClearButtonVisibility="WhileEditing">
+                        <Entry.Behaviors>
+                            <toolkit:NumericValidationBehavior
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                x:Name="priceValidator"
+                                Flags="ValidateOnValueChanged"
+                                MinimumValue="0.00"
+                                MaximumDecimalPlaces="2"
+                                />
+                        </Entry.Behaviors>
+                    </Entry>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Quantity"/>
+                    <Entry x:Name="field3_data"
+                           Placeholder="Product quantity"
+                           PlaceholderColor="Red"
+                           Keyboard="Numeric"
+                           ClearButtonVisibility="WhileEditing">
+                        <Entry.Behaviors>
+                            <toolkit:NumericValidationBehavior
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                x:Name="quantityValidator"
+                                Flags="ValidateOnValueChanged"
+                                MinimumValue="0"
+                                MaximumDecimalPlaces="0"
+                                />
+                        </Entry.Behaviors>
+                    </Entry>
+
+                </VerticalStackLayout>
+
+
+
+            </VerticalStackLayout>
+
+            <Line
+                Stroke="{StaticResource ContainerBackgroundColor}"
+                X2="{Binding Width, Source={RelativeSource Self}}"
+                HorizontalOptions="Fill"
+                StrokeThickness="2" />
+
+            <Grid
+                ZIndex="4"
+                VerticalOptions="Center"
+                ColumnDefinitions="*,*"
+                HorizontalOptions="FillAndExpand"
+
+                ColumnSpacing="8">
+
+
+                <Button x:Name="OkBtn" 
+                        Text="Add" 
+                        Clicked="OkBtn_Clicked"
+                        Grid.Column="0"
+                        >
+                        <!--IsEnabled="{Binding IsFormValid}"-->
+                </Button>
+
+                <Button x:Name="CancelBtn"
+                        Text="Cancel" 
+                        Clicked="CancelBtn_Clicked"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        BorderWidth="0.5"
+                        BorderColor="{StaticResource ContainerBorderColor}"
+                        Grid.Column="1"/>
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
+</mct:Popup>

@@ -1,0 +1,35 @@
+﻿mysql-displomna-1.mysql.database.azure.com
+User: admin_1
+pass: reallyStrong!132
+
+
+{
+  "email": "admin@mymail.bg",
+  "password": "Admin!1"
+}
+
+{
+  "email": "cahsier@cashier.mail",
+  "password": "Ccashier!1"
+}
+
+{
+  "email": "roleless@user.com",
+  "password": "Rroleless!1"
+}
+{
+  "email": "creating@users.test",
+  "password": "@Aa1@Aa1"
+}
+{
+  "email": "userswithrole@users.test",
+  "password": "@Aa1@Aa123"
+}
+{
+  "email": "cashierCreated@users.test",
+  "password": "@Aa1@Aa123"
+}
+{
+  "email": "cashier@test.user",
+  "password": "@Aa1@Aa123"
+}

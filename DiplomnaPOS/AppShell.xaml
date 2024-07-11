@@ -1,0 +1,54 @@
+<Shell
+    x:Class="DiplomnaPOS.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiplomnaPOS.Pages"   
+    FlyoutBackgroundColor="{StaticResource PageBackgroundColor}" 
+    xmlns:authentication ="clr-namespace:DiplomnaPOS.Pages.AuthenticationPages"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    FlyoutBehavior="Flyout"
+    Title="DiplomnaPOS">
+    <!--FlyoutBehavior="Locked"-->
+    <!--https://www.youtube.com/watch?v=WHmLYP-YNpk-->
+    <!--xmlns:local="clr-namespace:DiplomnaPOS.Pages"   FlyoutBackgroundColor="LightGray" FlyoutWidth="58"-->
+
+    <ShellContent
+        ContentTemplate="{DataTemplate authentication:LoadingPage}" 
+        Route="LoadingPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+
+    <ShellContent 
+        Title="Login"
+        ContentTemplate="{DataTemplate authentication:LoginPage}"
+        Route="LoginPage" 
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+
+    <ShellContent
+        Icon="{mi:Fluent Icon=Home32}"
+        Title="Home"
+        ContentTemplate="{DataTemplate local:StartPage}"
+        Route="StartPage" />
+
+    <ShellContent
+        Icon="{mi:Fluent Icon=DataArea24}"
+        Title="Dashboard"
+        ContentTemplate="{DataTemplate local:DashboardPage}"
+        Route="Dashboard" />
+
+    <ShellContent
+        Icon="{mi:Fluent Icon= PlugConnected24}"
+        Title="Device manager"
+        ContentTemplate="{DataTemplate local:DeviceManagerPage}"
+        Route="DeviceManager" />
+
+    <ShellContent
+        Icon="{mi:Fluent Icon=Settings32}"
+        Title="Settings"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="Settings" />
+
+
+
+</Shell>
