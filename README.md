@@ -15,6 +15,6 @@ The project files used for my Bachelor's Degree POS system.
 4. Run the DiplomnaPOS App;
 
 ### Additional notes
-- The project is primary maid on Windows;
+- The project is primary made on Windows;
 - All NFC functionality has been tested with [ACR122U](https://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/);
 - The project can compile and run on Android, but NFC and other functionalities don't work;
